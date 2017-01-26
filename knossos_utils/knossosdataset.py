@@ -1258,7 +1258,7 @@ class KnossosDataset(object):
 
         if (not isinstance(data, list)) and \
                 (not data is None):
-            data = np.array(data)
+            data = np.asarray(data,dtype=datatype)
         else:
             for ii in range(len(data)):
                 data[ii] = np.array(data[ii])
