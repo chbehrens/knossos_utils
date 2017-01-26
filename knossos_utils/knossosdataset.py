@@ -335,7 +335,7 @@ class KnossosDataset(object):
                     if "mag"+str(2**mag_test_nb) in mag_folder:
                         self._mag.append(2**mag_test_nb)
                         break
-	if len(all_mag_folders)>0:
+        if len(all_mag_folders)>0:
             mag_folder = our_glob(path+"/*mag*")[0].split("/")
             if len(mag_folder[-1]) > 1:
                 mag_folder = mag_folder[-1]
@@ -351,7 +351,7 @@ class KnossosDataset(object):
                 f.close()
             except:
                 raise NotImplementedError("Could not find/read *mag1/knossos.conf")
-	else:
+        else:
 	    try:
                 f = open(path+"/knossos.conf")
                 lines = f.readlines()
