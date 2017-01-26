@@ -346,14 +346,20 @@ class KnossosDataset(object):
                 mag_folder[:-len(re.findall("[\d]+", mag_folder)[-1])]
     
             try:
-                f = open(our_glob(path+"/*mag1")[0]+"/knossos.conf")
+                try:
+                    f = open(our_glob(path+"/*mag1")[0]+"/knossos.conf")
+                except FileNotFoundError:
+                    f = open(our_glob(path+"/*mag1")[0]+"/Knossos.conf")
                 lines = f.readlines()
                 f.close()
             except:
                 raise NotImplementedError("Could not find/read *mag1/knossos.conf")
         else:
             try:
-                f = open(path+"/knossos.conf")
+                try:
+                    f = open(path+"/knossos.conf")
+                except FileNotFoundError:
+                    f = open(path+"/Knossos.conf")
                 lines = f.readlines()
                 f.close()
             except:
