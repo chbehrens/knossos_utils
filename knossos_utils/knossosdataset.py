@@ -352,7 +352,7 @@ class KnossosDataset(object):
             except:
                 raise NotImplementedError("Could not find/read *mag1/knossos.conf")
         else:
-	    try:
+            try:
                 f = open(path+"/knossos.conf")
                 lines = f.readlines()
                 f.close()
