@@ -335,22 +335,29 @@ class KnossosDataset(object):
                     if "mag"+str(2**mag_test_nb) in mag_folder:
                         self._mag.append(2**mag_test_nb)
                         break
-
-        mag_folder = our_glob(path+"/*mag*")[0].split("/")
-        if len(mag_folder[-1]) > 1:
-            mag_folder = mag_folder[-1]
-        else:
-            mag_folder = mag_folder[-2]
-
-        self._name_mag_folder = \
-            mag_folder[:-len(re.findall("[\d]+", mag_folder)[-1])]
-
-        try:
-            f = open(our_glob(path+"/*mag1")[0]+"/knossos.conf")
-            lines = f.readlines()
-            f.close()
-        except:
-            raise NotImplementedError("Could not find/read *mag1/knossos.conf")
+	if len(all_mag_folders)>0:
+            mag_folder = our_glob(path+"/*mag*")[0].split("/")
+            if len(mag_folder[-1]) > 1:
+                mag_folder = mag_folder[-1]
+            else:
+                mag_folder = mag_folder[-2]
+    
+            self._name_mag_folder = \
+                mag_folder[:-len(re.findall("[\d]+", mag_folder)[-1])]
+    
+            try:
+                f = open(our_glob(path+"/*mag1")[0]+"/knossos.conf")
+                lines = f.readlines()
+                f.close()
+            except:
+                raise NotImplementedError("Could not find/read *mag1/knossos.conf")
+	else:
+	    try:
+                f = open(path+"/knossos.conf")
+                lines = f.readlines()
+                f.close()
+            except:
+                raise NotImplementedError("Could not find/read knossos.conf")
 
         parsed_dict = {}
         for line in lines:
