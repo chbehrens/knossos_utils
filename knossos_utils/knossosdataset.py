@@ -1278,7 +1278,10 @@ class KnossosDataset(object):
                 else:
                     data_inter = np.array(scipy.ndimage.zoom(data, 1.0/mag, order=3), dtype=datatype)
             else:
-                data_inter = np.array(np.copy(data), dtype=datatype)
+                if len(mags)==1:
+                    data_inter=np.asarry(data,dypte=datatype)
+                else:
+                    data_inter = np.array(np.copy(data), dtype=datatype)
 
             offset_mag = np.array(offset, dtype=np.int) // mag
             size_mag = np.array(data_inter.shape, dtype=np.int)
