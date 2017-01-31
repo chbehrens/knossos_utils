@@ -345,42 +345,6 @@ class KnossosDataset(object):
         if self.http_url and self.http_user and self.http_passwd:
             return True
         else:
-<<<<<<< HEAD
-            for mag_test_nb in range(32):
-                for mag_folder in all_mag_folders:
-                    if "mag"+str(2**mag_test_nb) in mag_folder:
-                        self._mag.append(2**mag_test_nb)
-                        break
-        if len(all_mag_folders)>0:
-            mag_folder = our_glob(path+"/*mag*")[0].split("/")
-            if len(mag_folder[-1]) > 1:
-                mag_folder = mag_folder[-1]
-            else:
-                mag_folder = mag_folder[-2]
-    
-            self._name_mag_folder = \
-                mag_folder[:-len(re.findall("[\d]+", mag_folder)[-1])]
-    
-            try:
-                try:
-                    f = open(our_glob(path+"/*mag1")[0]+"/knossos.conf")
-                except FileNotFoundError:
-                    f = open(our_glob(path+"/*mag1")[0]+"/Knossos.conf")
-                lines = f.readlines()
-                f.close()
-            except:
-                raise NotImplementedError("Could not find/read *mag1/knossos.conf")
-        else:
-            try:
-                try:
-                    f = open(path+"/knossos.conf")
-                except FileNotFoundError:
-                    f = open(path+"/Knossos.conf")
-                lines = f.readlines()
-                f.close()
-            except:
-                raise NotImplementedError("Could not find/read knossos.conf")
-=======
             return False
 
     @property
@@ -412,7 +376,6 @@ class KnossosDataset(object):
             f.close()
         except:
             raise NotImplementedError("Could not find/read *mag1/knossos.conf")
->>>>>>> refs/remotes/knossos-project/master
 
         self._conf_path = path_to_knossos_conf
 
