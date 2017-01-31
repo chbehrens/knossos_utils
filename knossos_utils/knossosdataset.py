@@ -498,19 +498,20 @@ class KnossosDataset(object):
                 self.parse_knossos_conf(self.knossos_path + 
                                         "/Knossos.conf", verbose=verbose)
 
-            mag_folder = all_mag_folders[0].split("/")
-            if len(mag_folder[-1]) > 1:
-                mag_folder = mag_folder[-1]
             else:
-                mag_folder = mag_folder[-2]
+                mag_folder = all_mag_folders[0].split("/")
+                if len(mag_folder[-1]) > 1:
+                    mag_folder = mag_folder[-1]
+                else:
+                    mag_folder = mag_folder[-2]
+    
+                self._name_mag_folder = \
+                    mag_folder[:-len(re.findall("[\d]+", mag_folder)[-1])]
 
-            self._name_mag_folder = \
-                mag_folder[:-len(re.findall("[\d]+", mag_folder)[-1])]
-
-            self.parse_knossos_conf(self.knossos_path +
-                                    self.name_mag_folder +
-                                    "%d/knossos.conf" % self.mag[0],
-                                    verbose=verbose)
+                self.parse_knossos_conf(self.knossos_path +
+                                        self.name_mag_folder +
+                                        "%d/knossos.conf" % self.mag[0],
+                                        verbose=verbose)
 
         if use_abs_path:
             self._knossos_path = os.path.abspath(self.knossos_path)
