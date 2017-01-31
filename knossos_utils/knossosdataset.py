@@ -1484,7 +1484,7 @@ class KnossosDataset(object):
                     current[0] = start[0]
                     while current[0] < end[0]:
                         this_cube_info = []
-                        if self._name_mag_foler == None:
+                        if self._name_mag_folder == None:
                             path = self._knossos_path + "x%04d/y%04d/z%04d/" \
                                         % (current[0], current[1], current[2]) 
                         else:
