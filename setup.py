@@ -39,7 +39,8 @@ install_requires = [
     "h5py>=2.5",
     "numpy>=1.10",
     "scipy>=0.16",
-    "networkx",
+    "networkx>=1.11",
+    "requests>=2.12",
 ]
 
 if sys.version_info[0] < 3:
@@ -51,7 +52,7 @@ def read(fname):
 
 setup(
     name="knossos_utils",
-    version="1.0",
+    version="0.1",
     description="Tools for generating or manipulating knossos datasets and annotation files",
     author="Sven Dorkenwald, KNOSSOS team",
     author_email="knossos-team@mpimf-heidelberg.mpg.de",

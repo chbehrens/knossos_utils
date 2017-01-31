@@ -86,7 +86,6 @@ def _export_cset_as_kd_thread(args):
         if coords[dim] + size[dim] > cset.box_size[dim]:
             size[dim] = cset.box_size[dim] - coords[dim]
 
-    print(coords)
     data_dict = cset.from_chunky_to_matrix(size, coords, name, hdf5names)
 
     data_list = []
@@ -290,7 +289,7 @@ class ChunkDataset(object):
                                       (box_size[dim] % chunk_size[dim]))
 
         self.path_head_folder = path_head_folder
-        self.chunk_size = chunk_size
+        self.chunk_size = np.array(chunk_size)
         self.box_coords = box_coords
         self._dataset_path = knossos_dataset_object.knossos_path
         self.box_size = box_size
@@ -620,7 +619,7 @@ class ChunkDataset(object):
             return output_matrix
 
     def from_matrix_to_chunky(self, offset, chunk_offset, data, name, h5_name,
-                              verbose=True, n_threads=16):
+                              datatype=None, verbose=True, n_threads=16):
         def _write_chunks(args):
             path = args[0]
             h5_name = args[1]
@@ -638,23 +637,26 @@ class ChunkDataset(object):
                     except:
                         chunk_data = np.zeros(
                             chunk_offset * 2 + self.chunk_size,
-                            dtype=np.uint8)
+                            dtype=datatype)
                         if verbose:
                             print("Cube does not exist, cube with zeros "
                                   "only assigned")
             else:
                 chunk_data = np.zeros(chunk_offset * 2 + self.chunk_size,
-                                      dtype=np.uint8)
+                                      dtype=datatype)
 
             chunk_data[low[0]: high[0], low[1]: high[1], low[2]: high[2]] = \
                 data[low_cut[0]: high_cut[0],
-                low_cut[1]: high_cut[1],
-                low_cut[2]: high_cut[2]]
+                     low_cut[1]: high_cut[1],
+                     low_cut[2]: high_cut[2]]
 
             with h5py.File(path, "w") as f:
                 f.create_dataset(h5_name, data=chunk_data, compression="gzip")
 
-        chunk_offset = np.array(chunk_offset)
+        if datatype is None:
+            datatype = data.dtype
+
+        chunk_offset = np.array(chunk_offset, dtype=np.int)
 
         start = np.floor(np.array([(offset[dim] - chunk_offset[dim]) /
                                    float(self.chunk_size[dim])
@@ -687,6 +689,7 @@ class ChunkDataset(object):
 
                         high = low + np.array(data.shape) - low_cut - \
                                self.chunk_size - 2 * chunk_offset
+                        high = high.astype(np.int)
                         high_cut = np.array(data.shape)
                         high_cut[high > 0] -= high[high > 0]
                         high[high > 0] = 0
