@@ -1279,7 +1279,7 @@ class KnossosDataset(object):
                     data_inter = np.array(scipy.ndimage.zoom(data, 1.0/mag, order=3), dtype=datatype)
             else:
                 if len(mags)==1:
-                    data_inter=np.asarry(data,dypte=datatype)
+                    data_inter=np.asarray(data,dypte=datatype)
                 else:
                     data_inter = np.array(np.copy(data), dtype=datatype)
 
