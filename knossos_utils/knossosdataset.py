@@ -496,7 +496,7 @@ class KnossosDataset(object):
             if len(all_mag_folders) == 0:
                 #raise Exception("No valid mag folders found")
                 self.parse_knossos_conf(self.knossos_path + 
-                                        "/knossos.conf", verbose=verbose)
+                                        "/Knossos.conf", verbose=verbose)
 
             mag_folder = all_mag_folders[0].split("/")
             if len(mag_folder[-1]) > 1:
